@@ -1,8 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "xedinunknown/un1q-test",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "A test project for Un1q",
+    "keywords": ["laravel", "test"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
