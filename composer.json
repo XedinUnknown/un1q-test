@@ -19,7 +19,8 @@
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.1",
         "spatie/laravel-ignition": "^2.0",
-        "psalm/plugin-laravel": "^2.8"
+        "psalm/plugin-laravel": "^2.8",
+        "squizlabs/php_codesniffer": "^3.7.2"
     },
     "autoload": {
         "psr-4": {
@@ -62,6 +63,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

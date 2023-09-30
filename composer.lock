@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff5737a2bfa974e0563b3e9405153e50",
+    "content-hash": "f7faa7d0df60a560a1423302e6a04d4c",
     "packages": [
         {
             "name": "brick/math",
@@ -6913,6 +6913,43 @@
             "time": "2023-07-13T12:00:00+00:00"
         },
         {
+            "name": "fossbarrow/laravel-phpcs",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PatricNox/laravel-phpcs.git",
+                "reference": "5dbf058b00ac52d1d61be4f21d95658699853b32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PatricNox/laravel-phpcs/zipball/5dbf058b00ac52d1d61be4f21d95658699853b32",
+                "reference": "5dbf058b00ac52d1d61be4f21d95658699853b32",
+                "shasum": ""
+            },
+            "require-dev": {
+                "php": "^7.4",
+                "squizlabs/php_codesniffer": "^3.5.5"
+            },
+            "default-branch": true,
+            "type": "phpcs-ruleset",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "patricnox",
+                    "email": "hello@patricnox.info"
+                }
+            ],
+            "description": "phpcs ruleset for laravel projects",
+            "support": {
+                "issues": "https://github.com/PatricNox/laravel-phpcs/issues",
+                "source": "https://github.com/PatricNox/laravel-phpcs/tree/main"
+            },
+            "time": "2023-09-05T22:46:36+00:00"
+        },
+        {
             "name": "hamcrest/hamcrest-php",
             "version": "v2.0.1",
             "source": {
@@ -10151,6 +10188,63 @@
             "time": "2023-09-18T10:36:07+00:00"
         },
         {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
+            "keywords": [
+                "phpcs",
+                "standards",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
+                "source": "https://github.com/squizlabs/PHP_CodeSniffer",
+                "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
+            },
+            "time": "2023-02-22T23:07:41+00:00"
+        },
+        {
             "name": "symfony/filesystem",
             "version": "v6.3.1",
             "source": {
@@ -10798,7 +10892,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
