@@ -1,2 +1,2 @@
 ## Un1q - Test
-A test project for Unq1.
+A test project for Un1q.
