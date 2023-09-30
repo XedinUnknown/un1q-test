@@ -49,6 +49,9 @@ jobs:
         env:
           APP_ENV: testing
 
+      - name: Run Psalm
+        run: ./vendor/bin/psalm --show-info --threads=8 --diff
+
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         if: failure()
