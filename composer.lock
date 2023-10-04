@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7faa7d0df60a560a1423302e6a04d4c",
+    "content-hash": "58d823db63b96c1578675e4af2c197fe",
     "packages": [
         {
             "name": "brick/math",
@@ -3104,6 +3104,55 @@
                 }
             ],
             "time": "2023-04-15T23:01:58+00:00"
+        },
+        {
+            "name": "rlanvin/php-rrule",
+            "version": "v2.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rlanvin/php-rrule.git",
+                "reference": "7ddef3d49b7a6461dc070f671f0d94509c9a537b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rlanvin/php-rrule/zipball/7ddef3d49b7a6461dc070f671f0d94509c9a537b",
+                "reference": "7ddef3d49b7a6461dc070f671f0d94509c9a537b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "^5.7|^6.5|^8.0"
+            },
+            "suggest": {
+                "ext-intl": "Intl extension is needed for humanReadable()"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RRule\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Lightweight and fast recurrence rules for PHP (RFC 5545)",
+            "homepage": "https://github.com/rlanvin/php-rrule",
+            "keywords": [
+                "date",
+                "ical",
+                "recurrence",
+                "recurring",
+                "rrule"
+            ],
+            "support": {
+                "issues": "https://github.com/rlanvin/php-rrule/issues",
+                "source": "https://github.com/rlanvin/php-rrule/tree/v2.4.1"
+            },
+            "time": "2023-06-07T13:15:59+00:00"
         },
         {
             "name": "symfony/console",
@@ -6911,43 +6960,6 @@
                 }
             ],
             "time": "2023-07-13T12:00:00+00:00"
-        },
-        {
-            "name": "fossbarrow/laravel-phpcs",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PatricNox/laravel-phpcs.git",
-                "reference": "5dbf058b00ac52d1d61be4f21d95658699853b32"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PatricNox/laravel-phpcs/zipball/5dbf058b00ac52d1d61be4f21d95658699853b32",
-                "reference": "5dbf058b00ac52d1d61be4f21d95658699853b32",
-                "shasum": ""
-            },
-            "require-dev": {
-                "php": "^7.4",
-                "squizlabs/php_codesniffer": "^3.5.5"
-            },
-            "default-branch": true,
-            "type": "phpcs-ruleset",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "patricnox",
-                    "email": "hello@patricnox.info"
-                }
-            ],
-            "description": "phpcs ruleset for laravel projects",
-            "support": {
-                "issues": "https://github.com/PatricNox/laravel-phpcs/issues",
-                "source": "https://github.com/PatricNox/laravel-phpcs/tree/main"
-            },
-            "time": "2023-09-05T22:46:36+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
