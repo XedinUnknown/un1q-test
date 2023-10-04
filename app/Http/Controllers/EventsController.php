@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\OverlappingEventOccurrenceException;
 use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -87,6 +87,52 @@ class EventsController extends Controller
             'interval' => $event->interval,
             'until' => $event->until,
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateEventRequest $request, string $id)
+    {
+        $requestData = $request->validated();
+        $event = Event::findOrFail($id);
+
+        if (isset($requestData['start'])) {
+            $event->start = $requestData['start'];
+        }
+        if (isset($requestData['end'])) {
+            $event->end = $requestData['end'];
+        }
+        if (isset($requestData['frequency'])) {
+            $event->frequency = $requestData['frequency'];
+        }
+        if (isset($requestData['interval'])) {
+            $event->interval = $requestData['interval'];
+        }
+        if (isset($requestData['until'])) {
+            $event->until = $requestData['until'];
+        }
+
+        // See `store()`
+        DB::beginTransaction();
+        try {
+            try {
+                $event->save();
+                DB::commit();
+            } catch (OverlappingEventOccurrenceException $e) {
+                DB::rollBack();
+
+                return response()->json([
+                    'errors' => [$e->getMessage()],
+                ], 409);
+            }
+        } catch (Exception $e) { // Any exception anywhere, except those handled above
+            DB::rollBack();
+
+            throw ValidationException::withMessages([$e->getMessage()]);
+        }
+
+        return to_route('events.show', ['event' => $event->id]);
     }
 
     /**

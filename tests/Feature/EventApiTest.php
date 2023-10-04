@@ -164,4 +164,79 @@ class EventApiTest extends TestCase
             $this->assertEquals($remainingEvent->start->format('H:i:s'), $occurrence->start->format('H:i:s'));
         }
     }
+
+    public function testUpdatingEventErrorIfOverlapping()
+    {
+        // From tomorrow, 12:00 - 13:00 for a few days
+        $occurencesAmtA = rand(3, 9);
+        $nowA = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $startA = $nowA->modify('12:00 next day');
+        $endA = $startA->modify('+1 hour');
+        $frequencyA = 'daily';
+        $intervalA = 1;
+        $untilA = $startA->modify(sprintf('+%1$d days', $occurencesAmtA - 1));
+        $eventA = Event::create([
+            'start' => $startA->format(self::DATETIME_FORMAT_ISO8601),
+            'end' => $endA->format(self::DATETIME_FORMAT_ISO8601),
+            'frequency' => $frequencyA,
+            'interval' => $intervalA,
+            'until' => $untilA->format(self::DATETIME_FORMAT_ISO8601),
+        ]);
+
+        // From tomorrow, 14:00 - 15:00 for a few days
+        $occurencesAmtB = rand(3, 9);
+        $nowB = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $startB = $nowB->modify('14:00 next day');
+        $endB = $startB->modify('+1 hour');
+        $frequencyB = 'daily';
+        $intervalB = 1;
+        $untilB = $startB->modify(sprintf('+%1$d days', $occurencesAmtB - 1));
+        $eventB = Event::create([
+            'start' => $startB->format(self::DATETIME_FORMAT_ISO8601),
+            'end' => $endB->format(self::DATETIME_FORMAT_ISO8601),
+            'frequency' => $frequencyB,
+            'interval' => $intervalB,
+            'until' => $untilB->format(self::DATETIME_FORMAT_ISO8601),
+        ]);
+
+        // Update first event via API to overlap with the second
+        $this->followingRedirects(); // Creation redirects to `show` route
+        $response = $this->patchJson(sprintf('/api/events/%1$s', $eventA->id), [
+            // Starts a minute before
+            'start' => $eventB->start->modify('-1 minute')->format(self::DATETIME_FORMAT_ISO8601),
+            // Ends a second earlier
+            'end' => $eventB->end->modify('-1 second')->format(self::DATETIME_FORMAT_ISO8601),
+        ]);
+        $response->assertStatus(409);
+    }
+
+    public function testUpdatingEventCleansAndRegeneratesOccurrences()
+    {
+        // From tomorrow, 12:00 - 13:00 for a few days
+        $occurencesAmt = rand(3, 3);
+        $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $start = $now->modify('12:00 next day');
+        $end = $start->modify('+1 hour');
+        $frequency = 'daily';
+        $interval = 1;
+        $until = $start->modify(sprintf('+%1$d days', $occurencesAmt - 1));
+        $event = Event::create([
+            'start' => $start->format(self::DATETIME_FORMAT_ISO8601),
+            'end' => $end->format(self::DATETIME_FORMAT_ISO8601),
+            'frequency' => $frequency,
+            'interval' => $interval,
+            'until' => $until->format(self::DATETIME_FORMAT_ISO8601),
+        ]);
+
+        // Update event via API with different start and end, overlapping with previous
+        $newStart = $event->start->modify('+30 minutes');
+        $newEnd = $event->start->modify('+1 hour');
+        $newUntil = $event->until->modify('-1 day');
+        $this->followingRedirects(); // Creation redirects to `show` route
+        $response = $this->patchJson(sprintf('/api/events/%1$s', $event->id), [
+            'start' => $newStart->format(self::DATETIME_FORMAT_ISO8601),
+            'end' => $newEnd->format(self::DATETIME_FORMAT_ISO8601),
+        ]);
+        $response->assertStatus(200);
+    }
 }

@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('events', EventsController::class)->except(['edit', 'update']);
+Route::resource('events', EventsController::class)->except(['edit']);
 Route::get('occurrences', [EventOccurrencesController::class, 'index']);

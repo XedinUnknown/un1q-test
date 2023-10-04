@@ -89,6 +89,27 @@ class EventObserverForOccurrences
         }
     }
 
+    /**
+     * Handle the Event "updated" event.
+     */
+    public function updated(Event $event): void
+    {
+        // Clean up
+        EventOccurrence::where('event_id', $event->id)
+            ->orWhereNull('event_id')
+            ->delete();
+
+        // `saved` event fires next and re-generates occurrences
+    }
+
+    /**
+     * Handle the Event "deleted" event.
+     */
+    public function deleted(Event $event): void
+    {
+        // Occurrences deleted via DB schema; see migration
+    }
+
     protected function getFormattedDateTime(DateTimeInterface $dateTime): string
     {
         return $dateTime->format(static::DATETIME_FORMAT_MYSQL);
