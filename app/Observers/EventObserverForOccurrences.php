@@ -7,7 +7,6 @@ namespace App\Observers;
 use App\Exceptions\OverlappingEventOccurrenceException;
 use App\Models\Event;
 use App\Models\EventOccurrence;
-use DateInterval;
 use DateTimeInterface;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -44,14 +43,17 @@ class EventObserverForOccurrences
                 $start = $this->getFormattedDateTime($occurrence);
                 $end = $this->getFormattedDateTime($occurrence->add($duration));
 
-                $overlappingOccurrence = EventOccurrence::whereBetween('start', [$start, $end])
-                    ->orWhereBetween('end', [$start, $end])
-                    ->orWhereRaw(
-                        sprintf(
-                            '%1$s BETWEEN `start` AND `end`',
-                            DB::connection()->getPdo()->quote($start)
-                        )
-                    )
+                $overlappingOccurrence = EventOccurrence::where(function($query) use ($start, $end): void {
+                        $query->whereBetween('start', [$start, $end])
+                            ->orWhereBetween('end', [$start, $end])
+                            ->orWhereRaw(
+                                sprintf(
+                                    '%1$s BETWEEN `start` AND `end`',
+                                    DB::connection()->getPdo()->quote($start)
+                                )
+                            );
+                    })
+                    ->whereNotNull('event_id')
                     ->get()
                     ->first();
 

@@ -37,6 +37,9 @@ class EventOccurrencesController extends Controller
             ->where('end', '<=', $toDate);
         if ($eventId !== null) {
             $query->where('event_id', $eventId);
+        } else {
+            // Exclude orphaned
+            $query->whereNotNull('event_id');
         }
 
         $occurrences = $query->paginate($limit);
