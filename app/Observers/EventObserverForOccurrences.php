@@ -22,13 +22,27 @@ use RRule\RRule;
 class EventObserverForOccurrences
 {
     protected const DATETIME_FORMAT_MYSQL = 'Y-m-d H:i:s';
+    /** Changing any of these causes occurrence invalidation */
+    protected const RRULE_ATTRIBUTES = [
+        'start',
+        'end',
+        'interval',
+        'frequency',
+        'until',
+    ];
 
     /**
      * Handle the Event "created" event.
      */
     public function saved(Event $event): void
     {
+        // Do nothing if rule attributes were not modified, except for new records
+        if ($event->wasChanged() && !$event->wasChanged(static::RRULE_ATTRIBUTES)) {
+            return;
+        }
+
         $duration = $event->start->diff($event->end);
+        // https://github.com/rlanvin/php-rrule/wiki/RRule
         $rule = new RRule([
             'FREQ' => $event->frequency,
             'INTERVAL' => $event->interval,
@@ -94,10 +108,12 @@ class EventObserverForOccurrences
      */
     public function updated(Event $event): void
     {
-        // Clean up
-        EventOccurrence::where('event_id', $event->id)
-            ->orWhereNull('event_id')
-            ->delete();
+        // Clean up if any of the rule attributes have been modified by the update
+        if ($event->wasChanged(static::RRULE_ATTRIBUTES)) {
+            EventOccurrence::where('event_id', $event->id)
+                ->orWhereNull('event_id')
+                ->delete();
+        }
 
         // `saved` event fires next and re-generates occurrences
     }
