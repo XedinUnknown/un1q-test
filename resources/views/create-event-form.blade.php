@@ -1,12 +1,20 @@
 <form action="{{ route('events.store') }}" method="post">
     <table>
         <tr>
-            <th><label for="start"><?= __('Start') ?></label></th>
+            <th><label for="start"><?= __('Start') ?>*</label></th>
             <td><input type="text" name="start" id="start" placeholder="Y-m-dTH:i:s" /></td>
         </tr>
         <tr>
-            <th><label for="end"><?= __('End') ?></label></th>
+            <th><label for="end"><?= __('End') ?>*</label></th>
             <td><input type="text" name="end" id="end" placeholder="Y-m-dTH:i:s" /></td>
+        </tr>
+        <tr>
+            <th><label for="title"><?= __('Title') ?>*</label></th>
+            <td><input type="text" name="title" id="title" maxlength="255" /></td>
+        </tr>
+        <tr>
+            <th><label for="description"><?= __('Description') ?></label></th>
+            <td><textarea type="text" name="description" id="description"></textarea></td>
         </tr>
         <tr>
             <th><label for="frequency"><?= __('Frequency') ?></label></th>

@@ -83,6 +83,7 @@ class EventsController extends Controller
             'id' => $event->id,
             'start' => $event->start->format(static::DATETIME_FORMAT_ISO8601),
             'end' => $event->end->format(static::DATETIME_FORMAT_ISO8601),
+            'title' => $event->title,
             'frequency' => $event->frequency,
             'interval' => $event->interval,
             'until' => $event->until,
@@ -97,11 +98,15 @@ class EventsController extends Controller
         $requestData = $request->validated();
         $event = Event::findOrFail($id);
 
+        // Only change an attribute if it is specified
         if (isset($requestData['start'])) {
             $event->start = $requestData['start'];
         }
         if (isset($requestData['end'])) {
             $event->end = $requestData['end'];
+        }
+        if (isset($requestData['title'])) {
+            $event->title = $requestData['title'];
         }
         if (isset($requestData['frequency'])) {
             $event->frequency = $requestData['frequency'];
@@ -111,6 +116,9 @@ class EventsController extends Controller
         }
         if (isset($requestData['until'])) {
             $event->until = $requestData['until'];
+        }
+        if (isset($requestData['description'])) {
+            $event->description = $requestData['description'];
         }
 
         // See `store()`
