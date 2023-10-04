@@ -33,4 +33,9 @@ class Event extends Model
     {
         return new DateTimeImmutable($value);
     }
+
+    protected function getUntilAttribute($value): DateTimeInterface
+    {
+        return new DateTimeImmutable($value);
+    }
 }
