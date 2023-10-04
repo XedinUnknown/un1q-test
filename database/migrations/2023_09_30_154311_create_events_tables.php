@@ -27,6 +27,8 @@ return new class extends Migration
             ])->nullable();
             $table->integer('interval')->nullable();
             $table->dateTime('until')->nullable();
+            $table->string('title', 255);
+            $table->mediumText('description');
         });
 
         Schema::create('event_occurrences', function (Blueprint $table) {

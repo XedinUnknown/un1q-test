@@ -37,6 +37,11 @@ class StoreEventRequest extends FormRequest
                 'required',
                 sprintf('date_format:%1$s', static::DATETIME_FORMAT_ISO8601),
             ],
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+            ],
             'frequency' => [
                 Rule::in(array_map('strtolower', array_keys(Event::ALLOWED_FREQUENCIES))),
             ],
@@ -49,6 +54,10 @@ class StoreEventRequest extends FormRequest
             'until' => [
                 sprintf('date_format:%1$s', static::DATETIME_FORMAT_ISO8601),
                 'required_with:frequency',
+            ],
+            'description' => [
+                'string',
+                'max:16777215',
             ],
         ];
     }

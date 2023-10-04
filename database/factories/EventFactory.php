@@ -35,6 +35,7 @@ class EventFactory extends Factory
             'frequency' => null,
             'interval' => null,
             'until' => null,
+            'description' => '',
         ];
     }
 }

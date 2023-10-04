@@ -22,6 +22,12 @@ class Event extends Model
         'frequency',
         'interval',
         'until',
+        'title',
+        'description',
+    ];
+
+    protected $attributes = [
+        'description' => '',
     ];
 
     protected function getStartAttribute($value): DateTimeInterface

@@ -24,6 +24,7 @@ class EventApiTest extends TestCase
         $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $start = $now->modify('9am next day');
         $end = $start->modify('+9 hours');
+        $title = uniqid('title');
         $until = $start->modify(sprintf('+%1$d days', $occurencesAmt - 1));
 
         // Create a new event
@@ -31,6 +32,7 @@ class EventApiTest extends TestCase
         $eventsResponse = $this->postJson('/api/events', [
             'start' => $start->format(self::DATETIME_FORMAT_ISO8601),
             'end' => $end->format(self::DATETIME_FORMAT_ISO8601),
+            'title' => $title,
             'frequency' => 'daily',
             'interval' => 1,
             'until' => $until->format(self::DATETIME_FORMAT_ISO8601),
@@ -91,9 +93,11 @@ class EventApiTest extends TestCase
         $start = $now->copy();
         $end = $start->copy()->add(new DateInterval('PT1M')); // 1 minute later
         $until = $start->copy()->modify('+1 day');
+        $title = uniqid('title');
         $eventData = [
             'start' => $start->format(self::DATETIME_FORMAT_ISO8601),
             'end' => $end->format(self::DATETIME_FORMAT_ISO8601),
+            'title' => $title,
             'frequency' => 'daily',
             'interval' => 1,
             'until' => $until->format(self::DATETIME_FORMAT_ISO8601),
@@ -117,12 +121,14 @@ class EventApiTest extends TestCase
         $nowA = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $startA = $nowA->modify('9am next day');
         $endA = $startA->modify('+9 hours');
+        $titleA = uniqid('titleA');
         $frequencyA = 'daily';
         $intervalA = 1;
         $untilA = $startA->modify(sprintf('+%1$d days', $occurencesAmtA - 1));
         $eventA = Event::create([
             'start' => $startA->format(self::DATETIME_FORMAT_ISO8601),
             'end' => $endA->format(self::DATETIME_FORMAT_ISO8601),
+            'title' => $titleA,
             'frequency' => $frequencyA,
             'interval' => $intervalA,
             'until' => $untilA->format(self::DATETIME_FORMAT_ISO8601),
@@ -133,12 +139,14 @@ class EventApiTest extends TestCase
         $nowB = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $startB = $nowB->modify('19:00 next day');
         $endB = $startB->modify('+2 hours');
+        $titleB = uniqid('titleB');
         $frequencyB = 'daily';
         $intervalB = 1;
         $untilB = $startB->modify(sprintf('+%1$d days', $occurencesAmtB - 1));
         $eventB = Event::create([
             'start' => $startB->format(self::DATETIME_FORMAT_ISO8601),
             'end' => $endB->format(self::DATETIME_FORMAT_ISO8601),
+            'title' => $titleB,
             'frequency' => $frequencyB,
             'interval' => $intervalB,
             'until' => $untilB->format(self::DATETIME_FORMAT_ISO8601),
@@ -172,12 +180,14 @@ class EventApiTest extends TestCase
         $nowA = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $startA = $nowA->modify('12:00 next day');
         $endA = $startA->modify('+1 hour');
+        $titleA = uniqid('titleA');
         $frequencyA = 'daily';
         $intervalA = 1;
         $untilA = $startA->modify(sprintf('+%1$d days', $occurencesAmtA - 1));
         $eventA = Event::create([
             'start' => $startA->format(self::DATETIME_FORMAT_ISO8601),
             'end' => $endA->format(self::DATETIME_FORMAT_ISO8601),
+            'title' => $titleA,
             'frequency' => $frequencyA,
             'interval' => $intervalA,
             'until' => $untilA->format(self::DATETIME_FORMAT_ISO8601),
@@ -188,12 +198,14 @@ class EventApiTest extends TestCase
         $nowB = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $startB = $nowB->modify('14:00 next day');
         $endB = $startB->modify('+1 hour');
+        $titleB = uniqid('titleB');
         $frequencyB = 'daily';
         $intervalB = 1;
         $untilB = $startB->modify(sprintf('+%1$d days', $occurencesAmtB - 1));
         $eventB = Event::create([
             'start' => $startB->format(self::DATETIME_FORMAT_ISO8601),
             'end' => $endB->format(self::DATETIME_FORMAT_ISO8601),
+            'title' => $titleB,
             'frequency' => $frequencyB,
             'interval' => $intervalB,
             'until' => $untilB->format(self::DATETIME_FORMAT_ISO8601),
@@ -217,12 +229,14 @@ class EventApiTest extends TestCase
         $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $start = $now->modify('12:00 next day');
         $end = $start->modify('+1 hour');
+        $title = uniqid('title');
         $frequency = 'daily';
         $interval = 1;
         $until = $start->modify(sprintf('+%1$d days', $occurencesAmt - 1));
         $event = Event::create([
             'start' => $start->format(self::DATETIME_FORMAT_ISO8601),
             'end' => $end->format(self::DATETIME_FORMAT_ISO8601),
+            'title' => $title,
             'frequency' => $frequency,
             'interval' => $interval,
             'until' => $until->format(self::DATETIME_FORMAT_ISO8601),
