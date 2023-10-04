@@ -40,7 +40,6 @@ return new class extends Migration
 
             $table->index(['event_id', 'start']);
             $table->index(['event_id', 'end']);
-            $table->index(['event_id']);
 
             $table->foreign('event_id')
                 ->references('id')
