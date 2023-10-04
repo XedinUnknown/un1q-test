@@ -245,7 +245,6 @@ class EventApiTest extends TestCase
         // Update event via API with different start and end, overlapping with previous
         $newStart = $event->start->modify('+30 minutes');
         $newEnd = $event->start->modify('+1 hour');
-        $newUntil = $event->until->modify('-1 day');
         $this->followingRedirects(); // Creation redirects to `show` route
         $response = $this->patchJson(sprintf('/api/events/%1$s', $event->id), [
             'start' => $newStart->format(self::DATETIME_FORMAT_ISO8601),
