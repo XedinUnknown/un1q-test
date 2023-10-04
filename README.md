@@ -9,8 +9,8 @@ The API exposes several endpoints:
   it isn't trivial to create a PATCH request, while the `update` action is implemented to accept
   partial data for convenience.
 - `/occurrences` - Supports only the `index` action, with pagination. Accepted params:
-    * `from` - Requred. Defines the start of the range, in which selected occurrences must be contained.
-    * `to` - Required. Defines the end of the range, in which selected occurrences must be contained.
+    * `from` - Requred. Defines the start of the range (inclusive), in which selected occurrences must be contained.
+    * `to` - Required. Defines the end of the range (inclusive), in which selected occurrences must be contained.
     * `event_id` - Optional. If specified, only occurrences that belong to an event with the specified
       `event_id` will be selected.
     * `limit` - Optional. Defines the max number of occurrences to select on this page.
