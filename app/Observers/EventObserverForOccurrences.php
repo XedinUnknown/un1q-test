@@ -22,7 +22,9 @@ use RRule\RRule;
 class EventObserverForOccurrences
 {
     protected const DATETIME_FORMAT_MYSQL = 'Y-m-d H:i:s';
-    /** Changing any of these causes occurrence invalidation */
+    /**
+     * Changing any of these causes occurrence invalidation
+     */
     protected const RRULE_ATTRIBUTES = [
         'start',
         'end',
@@ -57,16 +59,16 @@ class EventObserverForOccurrences
                 $start = $this->getFormattedDateTime($occurrence);
                 $end = $this->getFormattedDateTime($occurrence->add($duration));
 
-                $overlappingOccurrence = EventOccurrence::where(function($query) use ($start, $end): void {
-                        $query->whereBetween('start', [$start, $end])
-                            ->orWhereBetween('end', [$start, $end])
-                            ->orWhereRaw(
-                                sprintf(
-                                    '%1$s BETWEEN `start` AND `end`',
-                                    DB::connection()->getPdo()->quote($start)
-                                )
-                            );
-                    })
+                $overlappingOccurrence = EventOccurrence::where(function ($query) use ($start, $end): void {
+                    $query->whereBetween('start', [$start, $end])
+                        ->orWhereBetween('end', [$start, $end])
+                        ->orWhereRaw(
+                            sprintf(
+                                '%1$s BETWEEN `start` AND `end`',
+                                DB::connection()->getPdo()->quote($start)
+                            )
+                        );
+                })
                     ->whereNotNull('event_id')
                     ->get()
                     ->first();
