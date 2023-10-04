@@ -121,7 +121,7 @@ class EventObserverForOccurrences
     /**
      * Handle the Event "deleted" event.
      */
-    public function deleted(Event $event): void
+    public function deleted(): void
     {
         // Occurrences deleted via DB schema; see migration
     }
