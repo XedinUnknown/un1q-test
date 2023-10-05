@@ -250,6 +250,8 @@ class EventApiTest extends TestCase
             'start' => $newStart->format(self::DATETIME_FORMAT_ISO8601),
             'end' => $newEnd->format(self::DATETIME_FORMAT_ISO8601),
         ]);
+
+        // If the previous occurrences are not removed, new ones would overlap, and it would cause HTTP 409 Conflict
         $response->assertStatus(200);
     }
 }
