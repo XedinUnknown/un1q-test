@@ -1,5 +1,20 @@
 ## Un1q - Test
-A test project for Un1q.
+A test project for [Un1q][].
+
+### Getting Started
+This is a [Laravel & Docker][] project; please consult official documentation for comprehensive startup instructions.
+In short:
+
+1. Copy `.env.example` to `.env`, optionally tweaking configuration.
+   Notably, you might want to [fix ownership](https://stackoverflow.com/a/68244277/565229).
+2. With no Sail or Composer, the only option seems to be
+   `docker run --rm --interactive --tty --volume $PWD:/app composer install` to get Sail first.
+3. You might want to add an alias to your `hosts` file for the local domain; see `.env`.
+4. Generate an app key: `vendor/bin/sail artisan key:generate`.
+5. Bring the environment up, building it automatically if not yet built: `vendor/bin/sail up`.
+6. Prepare the database by running migrations: `vendor/bin/sail artisan:migrate`.
+7. Run tests using an in-memory database: `vendor/bin/sail test`.
+8. Use the API to [create a new event](http://un1q.myhost/api/events/create), etc.
 
 ### Features
 The main feature of this project is its events API, which has the URI `/api`.
@@ -9,7 +24,7 @@ The API exposes several endpoints:
   it isn't trivial to create a PATCH request, while the `update` action is implemented to accept
   partial data for convenience.
 - `/occurrences` - Supports only the `index` action, with pagination. Accepted params:
-    * `from` - Requred. Defines the start of the range (inclusive), in which selected occurrences must be contained.
+    * `from` - Required. Defines the start of the range (inclusive), in which selected occurrences must be contained.
     * `to` - Required. Defines the end of the range (inclusive), in which selected occurrences must be contained.
     * `event_id` - Optional. If specified, only occurrences that belong to an event with the specified
       `event_id` will be selected.
@@ -39,6 +54,11 @@ encoded in the event record:
   This is likely much more efficient, but at the same time this takes control away from the application.
 - It would be great to have a test to confirm that only rule updates cause occurrence invalidation.
   However, I don't know how to efficiently mock parts of that logic in Laravel in a simple way.
+- It seems that the conditions for finding overlapping occurrences could be improved, as it appears that
+  it may be possible to write it down in 2 expressions, instead of 3. I need to conceptualize and understand
+  the alternative approach first, though, so maybe later.
 
 
+[Un1q]: http://un1q.com/
 [RRULE]: https://icalendar.org/iCalendar-RFC-5545/3-8-5-3-recurrence-rule.html
+[Laravel & Docker]: https://laravel.com/docs/10.x/installation#laravel-and-docker
