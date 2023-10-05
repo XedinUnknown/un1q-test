@@ -242,6 +242,14 @@ class EventApiTest extends TestCase
             'until' => $until->format(self::DATETIME_FORMAT_ISO8601),
         ]);
 
+        // Verify matching occurrences were generated
+        $firstOccurrences = EventOccurrence::where('event_id', $event->id)->get();
+        $this->assertCount($occurencesAmt, $firstOccurrences);
+        foreach ($firstOccurrences as $occurrence) {
+            $this->assertEquals($start->format('H:i:s'), $occurrence->start->format('H:i:s'));
+            $this->assertEquals($end->format('H:i:s'), $occurrence->end->format('H:i:s'));
+        }
+
         // Update event via API with different start and end, overlapping with previous
         $newStart = $event->start->modify('+30 minutes');
         $newEnd = $event->start->modify('+1 hour');
@@ -253,5 +261,13 @@ class EventApiTest extends TestCase
 
         // If the previous occurrences are not removed, new ones would overlap, and it would cause HTTP 409 Conflict
         $response->assertStatus(200);
+
+        // Verify new matching occurrences were generated
+        $secondOccurrences = EventOccurrence::where('event_id', $event->id)->get();
+        // Count can be different this time, so just test the times
+        foreach ($secondOccurrences as $occurrence) {
+            $this->assertEquals($newStart->format('H:i:s'), $occurrence->start->format('H:i:s'));
+            $this->assertEquals($newEnd->format('H:i:s'), $occurrence->end->format('H:i:s'));
+        }
     }
 }
